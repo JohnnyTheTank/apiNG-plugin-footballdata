@@ -5,12 +5,15 @@
     "Jonathan Hornung <jonathan.hornung@gmail.com>"
   ],
   "version": "0.1.0",
-  "description": "FootballData plugin for apiNG",
+  "description": "football-data.org plugin for apiNG",
   "main": "dist/aping-plugin-footballdata.js",
   "moduleType": [],
   "keywords": [
     "aping",
     "footballdata",
+    "football-data.org",
+    "football-data",
+    "soccer",
     "angularjs",
     "rest",
     "api",
