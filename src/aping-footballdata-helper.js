@@ -36,7 +36,8 @@ angular.module("jtt_aping_footballdata")
                         scope.push(_data.data);
                         break;
 
-                    case 'fbd-season':
+                    case 'fbd-league':
+                        scope =_data.data;
                         break;
 
                     case 'fbd-player':
@@ -74,6 +75,10 @@ angular.module("jtt_aping_footballdata")
                         returnObject = this.getFbdTeamItemByJsonData(_item);
                         break;
 
+                    case "fbd-league":
+                        returnObject = this.getFbdLeagueItemByJsonData(_item);
+                        break;
+
                     default:
                         return false;
                 }
@@ -93,9 +98,25 @@ angular.module("jtt_aping_footballdata")
                 logo_url: _item.crestUrl ? _item.crestUrl.replace('http://', 'https://') : undefined
             });
 
-            //fbdTeamObject.date_time = new Date(fbdTeamObject.timestamp);
-
             return fbdTeamObject;
+        };
+
+        this.getFbdLeagueItemByJsonData = function (_item) {
+            var fbdLeagueObject = apingModels.getNew("fbd-league", this.getThisPlatformString());
+
+            angular.extend(fbdLeagueObject, {
+                leagueId: _item.id || undefined,
+                league: _item.league || undefined,
+                caption: _item.caption || undefined,
+                currentMatchday: _item.currentMatchday || undefined,
+                lastUpdated: _item.lastUpdated || undefined,
+                numberOfGames: _item.numberOfGames || undefined,
+                numberOfMatchdays: _item.numberOfMatchdays || undefined,
+                numberOfTeams: _item.numberOfTeams || undefined,
+                year: _item.year || undefined,
+            });
+
+            return fbdLeagueObject;
         };
 
 

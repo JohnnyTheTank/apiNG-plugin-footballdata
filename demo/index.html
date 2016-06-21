@@ -11,6 +11,14 @@
     <script src="../dist/aping-plugin-footballdata.js"></script>
 </head>
 <body ng-app="app">
-    <aping template-url="template.html" model="fbd-team" aping-footballdata="[{'id':'5'}]"></aping>
+
+<h3>model="fbd-season"</h3>
+<aping template-url="template.html" model="fbd-league" aping-footballdata="[{'year':'$CURRENT'}, {'year':'2013'}]"></aping>
+<hr>
+
+<h3>model="fbd-team"</h3>
+<aping template-url="template.html" model="fbd-team" aping-footballdata="[{'id':5},{'id':1}]"></aping>
+<hr>
+
 </body>
 </html>

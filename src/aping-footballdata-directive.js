@@ -47,19 +47,38 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                         }
                     }
 
-                    if(helperObject.model === 'fbd-team') {
-                        if(angular.isDefined(request.id)) {
+                    switch(helperObject.model) {
+                        case 'fbd-team':
+                            if(angular.isDefined(request.id)) {
 
-                            requestObject.id = request.id;
+                                requestObject.id = request.id;
 
-                            footballdataFactory.getTeam(requestObject)
-                                .then(function (_data) {
-                                    if (_data) {
-                                        apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
-                                    }
-                                });
-                        }
+                                footballdataFactory.getTeam(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            }
+                            break;
+
+                        case 'fbd-league':
+                            if(angular.isDefined(request.year)) {
+
+                                if(request.year !== '$CURRENT') {
+                                    requestObject.season = request.year;
+                                }
+
+                                footballdataFactory.getSeasons(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            }
+                            break;
                     }
+
 
 
                 });
