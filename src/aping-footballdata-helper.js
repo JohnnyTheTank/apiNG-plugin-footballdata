@@ -33,7 +33,11 @@ angular.module("jtt_aping_footballdata")
 
                 switch (_helperObject.model) {
                     case 'fbd-team':
-                        scope.push(_data.data);
+                        if(angular.isDefined(_data.data.teams)) {
+                            scope =_data.data.teams;
+                        } else {
+                            scope.push(_data.data);
+                        }
                         break;
 
                     case 'fbd-league':
@@ -41,6 +45,9 @@ angular.module("jtt_aping_footballdata")
                         break;
 
                     case 'fbd-player':
+                        if(_data.data.players && _data.data.players.length > 0) {
+                            scope = _data.data.players;
+                        }
                         break;
 
                     case 'fbd-table':
@@ -77,6 +84,10 @@ angular.module("jtt_aping_footballdata")
 
                     case "fbd-league":
                         returnObject = this.getFbdLeagueItemByJsonData(_item);
+                        break;
+
+                    case "fbd-player":
+                        returnObject = this.getFbdPlayerItemByJsonData(_item);
                         break;
 
                     default:
@@ -117,6 +128,22 @@ angular.module("jtt_aping_footballdata")
             });
 
             return fbdLeagueObject;
+        };
+
+        this.getFbdPlayerItemByJsonData = function (_item) {
+            var fbdPlayerObject = apingModels.getNew("fbd-player", this.getThisPlatformString());
+
+            angular.extend(fbdPlayerObject, {
+                contractUntil: _item.contractUntil || undefined,
+                dateOfBirth: _item.dateOfBirth || undefined,
+                jerseyNumber: _item.jerseyNumber || undefined,
+                marketValue: _item.marketValue || undefined,
+                name: _item.name || undefined,
+                nationality: _item.nationality || undefined,
+                position: _item.position || undefined,
+            });
+
+            return fbdPlayerObject;
         };
 
 

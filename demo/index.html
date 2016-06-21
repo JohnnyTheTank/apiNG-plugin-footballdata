@@ -12,12 +12,20 @@
 </head>
 <body ng-app="app">
 
-<h3>model="fbd-season"</h3>
+<h3>model="fbd-player" aping-footballdata="[{'teamId':1}]"</h3>
+<aping template-url="template.html" model="fbd-player" aping-footballdata="[{'teamId':1}]"></aping>
+<hr>
+
+<h3>model="fbd-season" aping-footballdata="[{'year':'$CURRENT'}, {'year':'2013'}]"</h3>
 <aping template-url="template.html" model="fbd-league" aping-footballdata="[{'year':'$CURRENT'}, {'year':'2013'}]"></aping>
 <hr>
 
-<h3>model="fbd-team"</h3>
-<aping template-url="template.html" model="fbd-team" aping-footballdata="[{'id':5},{'id':1}]"></aping>
+<h3>model="fbd-team" aping-footballdata="[{'leagueId':394}]"</h3>
+<aping template-url="template.html" model="fbd-team" aping-footballdata="[{'leagueId':394}]"></aping>
+<hr>
+
+<h3>model="fbd-team" aping-footballdata="[{'teamId':5},{'teamId':1}]"</h3>
+<aping template-url="template.html" model="fbd-team" aping-footballdata="[{'teamId':5},{'teamId':1}]"></aping>
 <hr>
 
 </body>

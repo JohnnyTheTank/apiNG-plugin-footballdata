@@ -49,11 +49,20 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
 
                     switch(helperObject.model) {
                         case 'fbd-team':
-                            if(angular.isDefined(request.id)) {
+                            if(angular.isDefined(request.teamId)) {
 
-                                requestObject.id = request.id;
+                                requestObject.id = request.teamId;
 
                                 footballdataFactory.getTeam(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else if (angular.isDefined(request.leagueId)) {
+                                requestObject.id = request.leagueId;
+
+                                footballdataFactory.getTeamsBySeason(requestObject)
                                     .then(function (_data) {
                                         if (_data) {
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
@@ -70,6 +79,20 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                 }
 
                                 footballdataFactory.getSeasons(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            }
+                            break;
+
+                        case 'fbd-player':
+                            if(angular.isDefined(request.teamId)) {
+
+                                requestObject.id = request.teamId;
+
+                                footballdataFactory.getPlayersByTeam(requestObject)
                                     .then(function (_data) {
                                         if (_data) {
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
