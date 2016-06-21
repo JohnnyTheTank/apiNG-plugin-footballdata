@@ -1,0 +1,30 @@
+{
+  "name": "apiNG-plugin-footballdata",
+  "homepage": "https://github.com/JohnnyTheTank/apiNG-plugin-footballdata",
+  "authors": [
+    "Jonathan Hornung <jonathan.hornung@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "description": "FootballData plugin for apiNG",
+  "main": "dist/aping-plugin-footballdata.js",
+  "moduleType": [],
+  "keywords": [
+    "aping",
+    "footballdata",
+    "angularjs",
+    "rest",
+    "api",
+    "json"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "apiNG": "*"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "aping-plugin-footballdata",
+  "version": "0.1.0",
+  "description": "FootballData plugin for apiNG",
+  "main": "dist/aping-plugin-footballdata.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnnyTheTank/apiNG-plugin-footballdata.git"
+  },
+  "keywords": [
+    "aping",
+    "footballdata",
+    "angularjs",
+    "rest",
+    "api",
+    "json",
+    "angular"
+  ],
+  "author": "Jonathan Hornung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JohnnyTheTank/apiNG-plugin-footballdata/issues"
+  },
+  "homepage": "https://github.com/JohnnyTheTank/apiNG-plugin-footballdata",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "angular-footballdata-api-factory": "*"
+  },
+  "dependencies": {
+    "aping": "*"
+  }
+}
