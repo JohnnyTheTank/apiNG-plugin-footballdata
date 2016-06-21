@@ -7,7 +7,7 @@
  */
 
 angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
-    .directive('apingFootballData', ['apingFootballDataHelper', 'apingUtilityHelper', 'footballdataFactory', function (apingFootballDataHelper, apingUtilityHelper, footballdataFactory) {
+    .directive('apingFootballdata', ['apingFootballDataHelper', 'apingUtilityHelper', 'footballdataFactory', function (apingFootballDataHelper, apingUtilityHelper, footballdataFactory) {
         return {
             require: '?aping',
             restrict: 'A',
@@ -16,7 +16,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
 
                 var appSettings = apingController.getAppSettings();
 
-                var requests = apingUtilityHelper.parseJsonFromAttributes(attrs.apingFootballData, apingFootballDataHelper.getThisPlatformString(), appSettings);
+                var requests = apingUtilityHelper.parseJsonFromAttributes(attrs.apingFootballdata, apingFootballDataHelper.getThisPlatformString(), appSettings);
 
                 requests.forEach(function (request) {
 
@@ -30,7 +30,6 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                     } else {
                         helperObject.getNativeData = false;
                     }
-
                     //create requestObject for api request call
 
                     var requestObject = {
@@ -38,7 +37,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                     };
 
                     if(angular.isDefined(request.items)) {
-                        if (rrequest.items === 0 || request.items === '0') {
+                        if (request.items === 0 || request.items === '0') {
                             return false;
                         }
 
@@ -48,13 +47,21 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                         }
                     }
 
-                    //get _data for each request
-                    footballdataFactory.getPostsFromUserById(requestObject)
-                        .then(function (_data) {
-                            if (_data) {
-                                apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
-                            }
-                        });
+                    if(helperObject.model === 'fbd-team') {
+                        if(angular.isDefined(request.id)) {
+
+                            requestObject.id = request.id;
+
+                            footballdataFactory.getTeam(requestObject)
+                                .then(function (_data) {
+                                    if (_data) {
+                                        apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                    }
+                                });
+                        }
+                    }
+
+
                 });
             }
         }

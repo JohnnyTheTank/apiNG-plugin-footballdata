@@ -12,16 +12,45 @@ angular.module("jtt_aping_footballdata")
             return "footballdata";
         };
 
+        this.getIdByLinksObject = function (_linksObject) {
+            var returnValue;
+            if (_linksObject && _linksObject.self && _linksObject.self.href) {
+                var tempValue = _linksObject.self.href.split('/').pop();
+                if(tempValue.length > 0) {
+                    returnValue = tempValue;
+                }
+            }
+            return returnValue;
+        };
+
         this.getObjectByJsonData = function (_data, _helperObject) {
+
             var requestResults = [];
             if (_data && _data.data) {
                 var _this = this;
 
-                //replace '_data.data.items'
-                if (_data.data.items) {
+                var scope = [];
 
-                    //replace '_data.data.items'
-                    angular.forEach(_data.data.items, function (value, key) {
+                switch (_helperObject.model) {
+                    case 'fbd-team':
+                        scope.push(_data.data);
+                        break;
+
+                    case 'fbd-season':
+                        break;
+
+                    case 'fbd-player':
+                        break;
+
+                    case 'fbd-table':
+                        break;
+
+                    case 'fbd-fixtures':
+                        break;
+                }
+
+                if (scope.constructor === Array && scope.length > 0) {
+                    angular.forEach(scope, function (value, key) {
                         var tempResult;
                         if (_helperObject.getNativeData === true || _helperObject.getNativeData === "true") {
                             tempResult = value;
@@ -33,7 +62,6 @@ angular.module("jtt_aping_footballdata")
                         }
                     });
                 }
-
             }
             return requestResults;
         };
@@ -42,8 +70,8 @@ angular.module("jtt_aping_footballdata")
             var returnObject = {};
             if (_item && _model) {
                 switch (_model) {
-                    case "social":
-                        returnObject = this.getSocialItemByJsonData(_item);
+                    case "fbd-team":
+                        returnObject = this.getFbdTeamItemByJsonData(_item);
                         break;
 
                     default:
@@ -53,33 +81,21 @@ angular.module("jtt_aping_footballdata")
             return returnObject;
         };
 
-        this.getSocialItemByJsonData = function (_item) {
-            var socialObject = apingModels.getNew("social", this.getThisPlatformString());
+        this.getFbdTeamItemByJsonData = function (_item) {
+            var fbdTeamObject = apingModels.getNew("fbd-team", this.getThisPlatformString());
 
-            //fill _item in socialObject
-            angular.extend(socialObject, {
-                blog_name: undefined,
-                blog_id: undefined,
-                blog_link: undefined,
-                type: undefined,
-                timestamp: undefined,
-                post_url: undefined,
-                intern_id: undefined,
-                text: undefined,
-                caption: undefined,
-                img_url: undefined,
-                thumb_url: undefined,
-                native_url: undefined,
-                source: undefined,
-                likes: undefined,
-                shares: undefined,
-                comments: undefined,
-                position: undefined
+            angular.extend(fbdTeamObject, {
+                teamId: _item._links ? this.getIdByLinksObject(_item._links) : undefined,
+                code: _item.code || undefined,
+                short_name: _item.shortName || undefined,
+                name: _item.name || undefined,
+                market_value: _item.squadMarketValue || undefined,
+                logo_url: _item.crestUrl ? _item.crestUrl.replace('http://', 'https://') : undefined
             });
 
-            socialObject.date_time = new Date(socialObject.timestamp);
+            //fbdTeamObject.date_time = new Date(fbdTeamObject.timestamp);
 
-            return socialObject;
+            return fbdTeamObject;
         };
 
 
