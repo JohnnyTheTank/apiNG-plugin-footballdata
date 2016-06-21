@@ -34,27 +34,18 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                     //create requestObject for api request call
 
                     var requestObject = {
-                        access_token: apingUtilityHelper.getApiCredentials(apingFootballDataHelper.getThisPlatformString(), "api_key"),
+                        apiKey: apingUtilityHelper.getApiCredentials(apingFootballDataHelper.getThisPlatformString(), "api_key"),
                     };
 
                     if(angular.isDefined(request.items)) {
-                        requestObject.count = request.items;
-                    } else {
-                        requestObject.count = appSettings.items;
-                    }
+                        if (rrequest.items === 0 || request.items === '0') {
+                            return false;
+                        }
 
-                    if (requestObject.count === 0 || requestObject.count === '0') {
-                        return false;
-                    }
-
-                    // -1 is "no explicit limit". same for NaN value
-                    if(requestObject.count < 0 || isNaN(requestObject.count)) {
-                        requestObject.count = undefined;
-                    }
-
-                    // the api has a limit of 100 items per request
-                    if(requestObject.count > 100) {
-                        requestObject.count = 100;
+                        // -1 is "no explicit limit". same for NaN value
+                        if(request.items < 0 || isNaN(request.items)) {
+                            request.items = undefined;
+                        }
                     }
 
                     //get _data for each request
