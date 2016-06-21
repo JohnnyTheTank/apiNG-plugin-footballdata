@@ -100,6 +100,24 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                     });
                             }
                             break;
+
+                        case 'fbd-table':
+                            if(angular.isDefined(request.leagueId)) {
+
+                                requestObject.id = request.leagueId;
+
+                                if(angular.isDefined(request.matchday)) {
+                                    requestObject.matchday = request.matchday;
+                                }
+
+                                footballdataFactory.getLeagueTableBySeason(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            }
+                            break;
                     }
 
 

@@ -12,10 +12,14 @@ angular.module("jtt_aping_footballdata")
             return "footballdata";
         };
 
-        this.getIdByLinksObject = function (_linksObject) {
+        this.getIdByLinksObject = function (_linksObject, _property) {
+            if(angular.isUndefined(_property)) {
+                _property = 'self';
+            }
+
             var returnValue;
-            if (_linksObject && _linksObject.self && _linksObject.self.href) {
-                var tempValue = _linksObject.self.href.split('/').pop();
+            if (_linksObject && _linksObject[_property] && _linksObject[_property].href) {
+                var tempValue = _linksObject[_property].href.split('/').pop();
                 if(tempValue.length > 0) {
                     returnValue = tempValue;
                 }
@@ -40,6 +44,10 @@ angular.module("jtt_aping_footballdata")
                         }
                         break;
 
+                    case 'fbd-table':
+                        scope.push(_data.data);
+                        break;
+
                     case 'fbd-league':
                         scope =_data.data;
                         break;
@@ -50,8 +58,6 @@ angular.module("jtt_aping_footballdata")
                         }
                         break;
 
-                    case 'fbd-table':
-                        break;
 
                     case 'fbd-fixtures':
                         break;
@@ -88,6 +94,10 @@ angular.module("jtt_aping_footballdata")
 
                     case "fbd-player":
                         returnObject = this.getFbdPlayerItemByJsonData(_item);
+                        break;
+
+                    case "fbd-table":
+                        returnObject = this.getFbdTableItemByJsonData(_item);
                         break;
 
                     default:
@@ -144,6 +154,42 @@ angular.module("jtt_aping_footballdata")
             });
 
             return fbdPlayerObject;
+        };
+
+        this.getFbdTableItemByJsonData = function (_item) {
+            var fbdTableObject = apingModels.getNew("fbd-table", this.getThisPlatformString());
+
+            var that = this;
+
+            angular.extend(fbdTableObject, {
+                leagueId: _item._links ? that.getIdByLinksObject(_item._links, 'soccerseason') : undefined,
+                leagueCaption: _item.leagueCaption || undefined,
+                matchday: _item.matchday || undefined,
+                standings: [],
+            });
+
+            if(_item.standing && _item.standing.constructor === Array && _item.standing.length > 0) {
+                angular.forEach(_item.standing, function (value, key) {
+                    fbdTableObject.standings.push({
+                        teamId: value._links ? that.getIdByLinksObject(value._links, 'team') : undefined,
+                        away: value.away || undefined,
+                        crestURI: value.crestURI ? value.crestURI.replace('http://', 'https://') : undefined,
+                        draws: value.draws || undefined,
+                        goalDifference: value.goalDifference || undefined,
+                        goals: value.goals || undefined,
+                        goalsAgainst: value.goalsAgainst || undefined,
+                        home: value.home || undefined,
+                        losses: value.losses || undefined,
+                        playedGames: value.playedGames || undefined,
+                        points: value.points || undefined,
+                        position: value.position || undefined,
+                        teamName: value.teamName || undefined,
+                        wins: value.wins || undefined,
+                    });
+                });
+            }
+
+            return fbdTableObject;
         };
 
 
