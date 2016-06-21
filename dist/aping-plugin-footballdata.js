@@ -219,10 +219,10 @@ angular.module("jtt_aping_footballdata")
             angular.extend(fbdTeamObject, {
                 teamId: _item._links ? this.getIdByLinksObject(_item._links) : undefined,
                 code: _item.code || undefined,
-                short_name: _item.shortName || undefined,
+                shortName: _item.shortName || undefined,
                 name: _item.name || undefined,
-                market_value: _item.squadMarketValue || undefined,
-                logo_url: _item.crestUrl ? _item.crestUrl.replace('http://', 'https://') : undefined
+                squadMarketValue: _item.squadMarketValue || undefined,
+                crestUrl: _item.crestUrl ? _item.crestUrl.replace('http://', 'https://') : undefined
             });
 
             return fbdTeamObject;
