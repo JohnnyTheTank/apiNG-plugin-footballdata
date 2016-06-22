@@ -1,11 +1,5 @@
 "use strict";
 
-/**
- @author Jonathan Hornung (https://github.com/JohnnyTheTank)
- @url https://github.com/JohnnyTheTank/apiNG-plugin-footballdata
- @licence MIT
- */
-
 angular.module("jtt_aping_footballdata")
     .service('apingFootballDataHelper', ['apingModels', 'apingTimeHelper', 'apingUtilityHelper', function (apingModels, apingTimeHelper, apingUtilityHelper) {
         this.getThisPlatformString = function () {
@@ -58,8 +52,12 @@ angular.module("jtt_aping_footballdata")
                         }
                         break;
 
-
-                    case 'fbd-fixtures':
+                    case 'fbd-fixture':
+                        if(angular.isDefined(_data.data.fixture)) {
+                            scope.push(_data.data.fixture);
+                        } else if (angular.isDefined(_data.data.fixtures)) {
+                            scope = _data.data.fixtures;
+                        }
                         break;
                 }
 
@@ -98,6 +96,10 @@ angular.module("jtt_aping_footballdata")
 
                     case "fbd-table":
                         returnObject = this.getFbdTableItemByJsonData(_item);
+                        break;
+
+                    case "fbd-fixture":
+                        returnObject = this.getFbdFixtureItemByJsonData(_item);
                         break;
 
                     default:
@@ -190,6 +192,22 @@ angular.module("jtt_aping_footballdata")
             }
 
             return fbdTableObject;
+        };
+
+        this.getFbdFixtureItemByJsonData = function (_item) {
+            var fbdFixtureObject = apingModels.getNew("fbd-fixture", this.getThisPlatformString());
+
+            angular.extend(fbdFixtureObject, {
+                fixtureId: _item._links ? this.getIdByLinksObject(_item._links) : undefined,
+                awayTeamName: _item.awayTeamName || undefined,
+                date: _item.date || undefined,
+                homeTeamName: _item.homeTeamName || undefined,
+                matchday: _item.matchday || undefined,
+                result: _item.result || undefined,
+                status: _item.status || undefined,
+            });
+
+            return fbdFixtureObject;
         };
 
 

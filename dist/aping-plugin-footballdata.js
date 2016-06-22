@@ -7,12 +7,6 @@
 */
 "use strict";
 
-/**
- @author Jonathan Hornung (https://github.com/JohnnyTheTank)
- @url https://github.com/JohnnyTheTank/apiNG-plugin-footballdata
- @licence MIT
- */
-
 angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
     .directive('apingFootballdata', ['apingFootballDataHelper', 'apingUtilityHelper', 'footballdataFactory', function (apingFootballDataHelper, apingUtilityHelper, footballdataFactory) {
         return {
@@ -125,6 +119,75 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                     });
                             }
                             break;
+
+                        case 'fbd-fixture':
+                            if(angular.isDefined(request.fixtureId)) {
+
+                                requestObject.id = request.fixtureId;
+
+                                footballdataFactory.getFixture(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else if(angular.isDefined(request.leagueId)) {
+                                requestObject.id = request.leagueId;
+
+                                if(angular.isDefined(request.timeFrame)) {
+                                    requestObject.timeFrame = request.timeFrame;
+                                }
+
+                                if(angular.isDefined(request.matchday)) {
+                                    requestObject.matchday = request.matchday;
+                                }
+
+                                footballdataFactory.getFixturesBySeason(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else if(angular.isDefined(request.teamId)) {
+                                requestObject.id = request.teamId;
+
+                                if(angular.isDefined(request.timeFrame)) {
+                                    requestObject.timeFrame = request.timeFrame;
+                                }
+
+                                if(angular.isDefined(request.year)) {
+                                    if(request.year !== '$CURRENT') {
+                                        requestObject.season = request.year;
+                                    }
+                                }
+
+                                if(angular.isDefined(request.venue)) {
+                                    requestObject.venue = request.venue;
+                                }
+
+                                footballdataFactory.getFixturesByTeam(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else {
+                                if(angular.isDefined(request.timeFrame)) {
+                                    requestObject.timeFrame = request.timeFrame;
+                                }
+
+                                if(angular.isDefined(request.leagueCodes)) {
+                                    requestObject.league = request.leagueCodes;
+                                }
+
+                                footballdataFactory.getFixtures(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            }
+                            break;
                     }
 
 
@@ -133,12 +196,6 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
             }
         }
     }]);;"use strict";
-
-/**
- @author Jonathan Hornung (https://github.com/JohnnyTheTank)
- @url https://github.com/JohnnyTheTank/apiNG-plugin-footballdata
- @licence MIT
- */
 
 angular.module("jtt_aping_footballdata")
     .service('apingFootballDataHelper', ['apingModels', 'apingTimeHelper', 'apingUtilityHelper', function (apingModels, apingTimeHelper, apingUtilityHelper) {
@@ -192,8 +249,12 @@ angular.module("jtt_aping_footballdata")
                         }
                         break;
 
-
-                    case 'fbd-fixtures':
+                    case 'fbd-fixture':
+                        if(angular.isDefined(_data.data.fixture)) {
+                            scope.push(_data.data.fixture);
+                        } else if (angular.isDefined(_data.data.fixtures)) {
+                            scope = _data.data.fixtures;
+                        }
                         break;
                 }
 
@@ -232,6 +293,10 @@ angular.module("jtt_aping_footballdata")
 
                     case "fbd-table":
                         returnObject = this.getFbdTableItemByJsonData(_item);
+                        break;
+
+                    case "fbd-fixture":
+                        returnObject = this.getFbdFixtureItemByJsonData(_item);
                         break;
 
                     default:
@@ -324,6 +389,22 @@ angular.module("jtt_aping_footballdata")
             }
 
             return fbdTableObject;
+        };
+
+        this.getFbdFixtureItemByJsonData = function (_item) {
+            var fbdFixtureObject = apingModels.getNew("fbd-fixture", this.getThisPlatformString());
+
+            angular.extend(fbdFixtureObject, {
+                fixtureId: _item._links ? this.getIdByLinksObject(_item._links) : undefined,
+                awayTeamName: _item.awayTeamName || undefined,
+                date: _item.date || undefined,
+                homeTeamName: _item.homeTeamName || undefined,
+                matchday: _item.matchday || undefined,
+                result: _item.result || undefined,
+                status: _item.status || undefined,
+            });
+
+            return fbdFixtureObject;
         };
 
 

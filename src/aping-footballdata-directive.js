@@ -1,11 +1,5 @@
 "use strict";
 
-/**
- @author Jonathan Hornung (https://github.com/JohnnyTheTank)
- @url https://github.com/JohnnyTheTank/apiNG-plugin-footballdata
- @licence MIT
- */
-
 angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
     .directive('apingFootballdata', ['apingFootballDataHelper', 'apingUtilityHelper', 'footballdataFactory', function (apingFootballDataHelper, apingUtilityHelper, footballdataFactory) {
         return {
@@ -111,6 +105,75 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                 }
 
                                 footballdataFactory.getLeagueTableBySeason(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            }
+                            break;
+
+                        case 'fbd-fixture':
+                            if(angular.isDefined(request.fixtureId)) {
+
+                                requestObject.id = request.fixtureId;
+
+                                footballdataFactory.getFixture(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else if(angular.isDefined(request.leagueId)) {
+                                requestObject.id = request.leagueId;
+
+                                if(angular.isDefined(request.timeFrame)) {
+                                    requestObject.timeFrame = request.timeFrame;
+                                }
+
+                                if(angular.isDefined(request.matchday)) {
+                                    requestObject.matchday = request.matchday;
+                                }
+
+                                footballdataFactory.getFixturesBySeason(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else if(angular.isDefined(request.teamId)) {
+                                requestObject.id = request.teamId;
+
+                                if(angular.isDefined(request.timeFrame)) {
+                                    requestObject.timeFrame = request.timeFrame;
+                                }
+
+                                if(angular.isDefined(request.year)) {
+                                    if(request.year !== '$CURRENT') {
+                                        requestObject.season = request.year;
+                                    }
+                                }
+
+                                if(angular.isDefined(request.venue)) {
+                                    requestObject.venue = request.venue;
+                                }
+
+                                footballdataFactory.getFixturesByTeam(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else {
+                                if(angular.isDefined(request.timeFrame)) {
+                                    requestObject.timeFrame = request.timeFrame;
+                                }
+
+                                if(angular.isDefined(request.leagueCodes)) {
+                                    requestObject.league = request.leagueCodes;
+                                }
+
+                                footballdataFactory.getFixtures(requestObject)
                                     .then(function (_data) {
                                         if (_data) {
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
