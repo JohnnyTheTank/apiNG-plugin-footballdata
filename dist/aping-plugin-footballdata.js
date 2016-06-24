@@ -1,6 +1,6 @@
 /**
     @name: aping-plugin-footballdata 
-    @version: 0.1.0 (22-06-2016) 
+    @version: 0.5.0 (24-06-2016) 
     @author: Jonathan Hornung 
     @url: https://github.com/JohnnyTheTank/apiNG-plugin-footballdata 
     @license: MIT
@@ -387,7 +387,6 @@ angular.module("jtt_aping_footballdata")
                     });
                 });
             }
-
             return fbdTableObject;
         };
 
@@ -406,7 +405,6 @@ angular.module("jtt_aping_footballdata")
 
             return fbdFixtureObject;
         };
-
 
     }]);;"use strict";
 

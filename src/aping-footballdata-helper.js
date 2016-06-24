@@ -190,7 +190,6 @@ angular.module("jtt_aping_footballdata")
                     });
                 });
             }
-
             return fbdTableObject;
         };
 
@@ -209,6 +208,5 @@ angular.module("jtt_aping_footballdata")
 
             return fbdFixtureObject;
         };
-
 
     }]);
