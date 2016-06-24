@@ -7,14 +7,14 @@ angular.module("jtt_aping_footballdata")
         };
 
         this.getIdByLinksObject = function (_linksObject, _property) {
-            if(angular.isUndefined(_property)) {
+            if (angular.isUndefined(_property)) {
                 _property = 'self';
             }
 
             var returnValue;
             if (_linksObject && _linksObject[_property] && _linksObject[_property].href) {
                 var tempValue = _linksObject[_property].href.split('/').pop();
-                if(tempValue.length > 0) {
+                if (tempValue.length > 0) {
                     returnValue = tempValue;
                 }
             }
@@ -31,8 +31,8 @@ angular.module("jtt_aping_footballdata")
 
                 switch (_helperObject.model) {
                     case 'fbd-team':
-                        if(angular.isDefined(_data.data.teams)) {
-                            scope =_data.data.teams;
+                        if (angular.isDefined(_data.data.teams)) {
+                            scope = _data.data.teams;
                         } else {
                             scope.push(_data.data);
                         }
@@ -43,17 +43,22 @@ angular.module("jtt_aping_footballdata")
                         break;
 
                     case 'fbd-league':
-                        scope =_data.data;
+                        if (_data.data.constructor === Array) {
+                            scope = _data.data;
+                        } else {
+                            scope.push(_data.data);
+                        }
+
                         break;
 
                     case 'fbd-player':
-                        if(_data.data.players && _data.data.players.length > 0) {
+                        if (_data.data.players && _data.data.players.length > 0) {
                             scope = _data.data.players;
                         }
                         break;
 
                     case 'fbd-fixture':
-                        if(angular.isDefined(_data.data.fixture)) {
+                        if (angular.isDefined(_data.data.fixture)) {
                             scope.push(_data.data.fixture);
                         } else if (angular.isDefined(_data.data.fixtures)) {
                             scope = _data.data.fixtures;
@@ -170,7 +175,7 @@ angular.module("jtt_aping_footballdata")
                 standings: [],
             });
 
-            if(_item.standing && _item.standing.constructor === Array && _item.standing.length > 0) {
+            if (_item.standing && _item.standing.constructor === Array && _item.standing.length > 0) {
                 angular.forEach(_item.standing, function (value, key) {
                     fbdTableObject.standings.push({
                         teamId: value._links ? that.getIdByLinksObject(value._links, 'team') : undefined,

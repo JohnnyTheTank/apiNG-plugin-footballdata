@@ -143,6 +143,15 @@ Samples:
 * `[{'teamId':'5'}]`
 * `[{'teamId':'18'}, {'teamId':'7'}]`
 
+#### Request League by id
+|  parameter  | sample | description | optional |
+|----------|---------|---------|---------|
+| **`leagueId`** | `394` | footballdata-org id of the league | no |
+
+Samples:
+* `[{'leagueId':'394'}]`
+* `[{'leagueId':'398'}, {'leagueId':'400'}]`
+
 #### Request Leagues by year
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|

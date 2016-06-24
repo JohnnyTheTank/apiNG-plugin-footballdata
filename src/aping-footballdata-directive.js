@@ -9,7 +9,6 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
             link: function (scope, element, attrs, apingController) {
 
                 var appSettings = apingController.getAppSettings();
-
                 var requests = apingUtilityHelper.parseJsonFromAttributes(attrs.apingFootballdata, apingFootballDataHelper.getThisPlatformString(), appSettings);
 
                 requests.forEach(function (request) {
@@ -73,6 +72,15 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                 }
 
                                 footballdataFactory.getSeasons(requestObject)
+                                    .then(function (_data) {
+                                        if (_data) {
+                                            apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
+                                        }
+                                    });
+                            } else if(angular.isDefined(request.leagueId)) {
+                                requestObject.id = request.leagueId;
+
+                                footballdataFactory.getSeason(requestObject)
                                     .then(function (_data) {
                                         if (_data) {
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
