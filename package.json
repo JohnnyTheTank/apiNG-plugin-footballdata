@@ -1,6 +1,6 @@
 {
   "name": "aping-plugin-footballdata",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "FootballData plugin for apiNG",
   "main": "dist/aping-plugin-footballdata.js",
   "scripts": {

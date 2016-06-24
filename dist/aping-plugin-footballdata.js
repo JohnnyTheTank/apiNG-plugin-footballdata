@@ -1,6 +1,6 @@
 /**
     @name: aping-plugin-footballdata 
-    @version: 0.5.3 (25-06-2016) 
+    @version: 0.5.4 (25-06-2016) 
     @author: Jonathan Hornung 
     @url: https://github.com/JohnnyTheTank/apiNG-plugin-footballdata 
     @license: MIT
@@ -386,18 +386,18 @@ angular.module("jtt_aping_footballdata")
                         teamId: value.teamId || (value._links ? that.getIdByLinksObject(value._links, 'team') : undefined),
                         away: value.away || undefined,
                         crestURI: value.crestURI ? value.crestURI.replace('http://', 'https://') : undefined,
-                        draws: value.draws || undefined,
-                        goalDifference: value.goalDifference || undefined,
-                        goals: value.goals || undefined,
-                        goalsAgainst: value.goalsAgainst || undefined,
+                        draws: angular.isDefined(value.draws) ? value.draws : undefined,
+                        goalDifference: angular.isDefined(value.goalDifference) ? value.goalDifference : undefined,
+                        goals: angular.isDefined(value.goals) ? value.goals : undefined,
+                        goalsAgainst: angular.isDefined(value.goalsAgainst) ? value.goalsAgainst : undefined,
                         home: value.home || undefined,
-                        losses: value.losses || undefined,
-                        playedGames: value.playedGames || undefined,
-                        points: value.points || undefined,
-                        position: value.position || undefined,
-                        rank: value.rank || undefined,
+                        losses: angular.isDefined(value.losses) ? value.losses : undefined,
+                        playedGames: angular.isDefined(value.playedGames) ? value.playedGames : undefined,
+                        points: angular.isDefined(value.points) ? value.points : undefined,
+                        position: angular.isDefined(value.position) ? value.position : undefined,
+                        rank: angular.isDefined(value.rank) ? value.rank : undefined,
                         teamName: value.teamName || undefined,
-                        wins: value.wins || undefined,
+                        wins: angular.isDefined(value.wins) ? value.wins : undefined,
                         group: value.group || undefined,
                         team: value.team || undefined,
                     });
@@ -408,23 +408,22 @@ angular.module("jtt_aping_footballdata")
                     var standing = [];
 
                     angular.forEach(groupValue, function (value, key) {
-                        console.log('value', value);
                         standing.push({
                             teamId: value.teamId || (value._links ? that.getIdByLinksObject(value._links, 'team') : undefined),
                             away: value.away || undefined,
                             crestURI: value.crestURI ? value.crestURI.replace('http://', 'https://') : undefined,
-                            draws: value.draws || undefined,
-                            goalDifference: value.goalDifference || undefined,
-                            goals: value.goals || undefined,
-                            goalsAgainst: value.goalsAgainst || undefined,
+                            draws: angular.isDefined(value.draws) ? value.draws : undefined,
+                            goalDifference: angular.isDefined(value.goalDifference) ? value.goalDifference : undefined,
+                            goals: angular.isDefined(value.goals) ? value.goals : undefined,
+                            goalsAgainst: angular.isDefined(value.goalsAgainst) ? value.goalsAgainst : undefined,
                             home: value.home || undefined,
-                            losses: value.losses || undefined,
-                            playedGames: value.playedGames || undefined,
-                            points: value.points || undefined,
-                            position: value.position || undefined,
-                            rank: value.rank || undefined,
+                            losses: angular.isDefined(value.losses) ? value.losses : undefined,
+                            playedGames: angular.isDefined(value.playedGames) ? value.playedGames : undefined,
+                            points: angular.isDefined(value.points) ? value.points : undefined,
+                            position: angular.isDefined(value.position) ? value.position : undefined,
+                            rank: angular.isDefined(value.rank) ? value.rank : undefined,
                             teamName: value.teamName || undefined,
-                            wins: value.wins || undefined,
+                            wins: angular.isDefined(value.wins) ? value.wins : undefined,
                             group: value.group || undefined,
                             team: value.team || undefined,
                         });
@@ -436,7 +435,6 @@ angular.module("jtt_aping_footballdata")
                     })
                 });
             }
-
             return fbdTableObject;
         };
 
