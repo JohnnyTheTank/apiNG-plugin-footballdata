@@ -1,6 +1,6 @@
 /**
     @name: aping-plugin-footballdata 
-    @version: 0.5.1 (24-06-2016) 
+    @version: 0.5.2 (25-06-2016) 
     @author: Jonathan Hornung 
     @url: https://github.com/JohnnyTheTank/apiNG-plugin-footballdata 
     @license: MIT
@@ -377,12 +377,12 @@ angular.module("jtt_aping_footballdata")
                 leagueId: _item._links ? that.getIdByLinksObject(_item._links, 'soccerseason') : undefined,
                 leagueCaption: _item.leagueCaption || undefined,
                 matchday: _item.matchday || undefined,
-                standings: [],
             });
 
             if (_item.standing && _item.standing.constructor === Array && _item.standing.length > 0) {
+                fbdTableObject.standing = [];
                 angular.forEach(_item.standing, function (value, key) {
-                    fbdTableObject.standings.push({
+                    fbdTableObject.standing.push({
                         teamId: value._links ? that.getIdByLinksObject(value._links, 'team') : undefined,
                         away: value.away || undefined,
                         crestURI: value.crestURI ? value.crestURI.replace('http://', 'https://') : undefined,
@@ -399,7 +399,37 @@ angular.module("jtt_aping_footballdata")
                         wins: value.wins || undefined,
                     });
                 });
+            } else if (typeof _item.standings === 'object' && _item.standings !== null) {
+                fbdTableObject.groups = [];
+                angular.forEach(_item.standings, function (groupValue, groupKey) {
+                    var standing = [];
+
+                    angular.forEach(groupValue, function (value, key) {
+                        standing.push({
+                            teamId: value._links ? that.getIdByLinksObject(value._links, 'team') : undefined,
+                            away: value.away || undefined,
+                            crestURI: value.crestURI ? value.crestURI.replace('http://', 'https://') : undefined,
+                            draws: value.draws || undefined,
+                            goalDifference: value.goalDifference || undefined,
+                            goals: value.goals || undefined,
+                            goalsAgainst: value.goalsAgainst || undefined,
+                            home: value.home || undefined,
+                            losses: value.losses || undefined,
+                            playedGames: value.playedGames || undefined,
+                            points: value.points || undefined,
+                            position: value.position || undefined,
+                            teamName: value.teamName || undefined,
+                            wins: value.wins || undefined,
+                        });
+                    });
+
+                    fbdTableObject.groups.push({
+                        name: groupKey,
+                        standing: standing
+                    })
+                });
             }
+
             return fbdTableObject;
         };
 
