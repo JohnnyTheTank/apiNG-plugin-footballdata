@@ -178,7 +178,7 @@ angular.module("jtt_aping_footballdata")
                 fbdTableObject.standing = [];
                 angular.forEach(_item.standing, function (value, key) {
                     fbdTableObject.standing.push({
-                        teamId: value._links ? that.getIdByLinksObject(value._links, 'team') : undefined,
+                        teamId: value.teamId || (value._links ? that.getIdByLinksObject(value._links, 'team') : undefined),
                         away: value.away || undefined,
                         crestURI: value.crestURI ? value.crestURI.replace('http://', 'https://') : undefined,
                         draws: value.draws || undefined,
@@ -190,8 +190,11 @@ angular.module("jtt_aping_footballdata")
                         playedGames: value.playedGames || undefined,
                         points: value.points || undefined,
                         position: value.position || undefined,
+                        rank: value.rank || undefined,
                         teamName: value.teamName || undefined,
                         wins: value.wins || undefined,
+                        group: value.group || undefined,
+                        team: value.team || undefined,
                     });
                 });
             } else if (typeof _item.standings === 'object' && _item.standings !== null) {
@@ -200,8 +203,9 @@ angular.module("jtt_aping_footballdata")
                     var standing = [];
 
                     angular.forEach(groupValue, function (value, key) {
+                        console.log('value', value);
                         standing.push({
-                            teamId: value._links ? that.getIdByLinksObject(value._links, 'team') : undefined,
+                            teamId: value.teamId || (value._links ? that.getIdByLinksObject(value._links, 'team') : undefined),
                             away: value.away || undefined,
                             crestURI: value.crestURI ? value.crestURI.replace('http://', 'https://') : undefined,
                             draws: value.draws || undefined,
@@ -213,8 +217,11 @@ angular.module("jtt_aping_footballdata")
                             playedGames: value.playedGames || undefined,
                             points: value.points || undefined,
                             position: value.position || undefined,
+                            rank: value.rank || undefined,
                             teamName: value.teamName || undefined,
                             wins: value.wins || undefined,
+                            group: value.group || undefined,
+                            team: value.team || undefined,
                         });
                     });
 
@@ -243,5 +250,4 @@ angular.module("jtt_aping_footballdata")
 
             return fbdFixtureObject;
         };
-
     }]);
