@@ -12,6 +12,7 @@
 * This plugin supports the [`get-native-data` parameter](https://aping.readme.io/docs/advanced#parameters)
 * This plugin needs an [access token](#2-access-token) :warning:
 * Used promise library: [angular-footballdata-api-factory](https://github.com/JohnnyTheTank/angular-footballdata-api-factory) _(included in distribution files)_
+* Demo: http://plnkr.co/edit/a8Uj8V
 
 # Documentation
 
