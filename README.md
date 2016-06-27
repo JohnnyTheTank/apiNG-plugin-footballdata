@@ -166,7 +166,7 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`leagueId`** | `394` | footballdata-org id of the league | no |
-| **`matchday`** | `3` | The matchday default is the current matchday. For former seasons the last matchday is taken. | yes |
+| **`matchday`** | `3` | The current/last matchday is taken per default | yes |
 
 Samples:
 * `[{'leagueId':'394', 'matchday':4}]`
@@ -185,8 +185,8 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`leagueId`** | `394` | footballdata-org id of the league | no |
-| **`matchday`** | `3` | The matchday default is the current matchday. For former seasons the last matchday is taken. | yes |
-| **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either p(ast) or n(ext), representing a timeframe either in the past or future. It is followed by a number in the range 1..99. It defaults to n7 in the fixture resource and is unset for fixture as a subresource. For instance: p6 would return all fixtures in the last 6 days, whereas n23 would result in returning all fixtures in the next 23 days. | yes |
+| **`matchday`** | `3` | The current/last matchday is taken per default | yes |
+| **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either 'p' for past or 'n' for next. It is followed by a number in the range 1-99.  | yes |
 
 Samples:
 * `[{'leagueId':'394', 'matchday':4}]`
@@ -195,7 +195,7 @@ Samples:
 #### Request Fixtures by timeFrame
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
-| **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either p(ast) or n(ext), representing a timeframe either in the past or future. It is followed by a number in the range 1..99. It defaults to n7 in the fixture resource and is unset for fixture as a subresource. For instance: p6 would return all fixtures in the last 6 days, whereas n23 would result in returning all fixtures in the next 23 days. | no |
+| **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either 'p' for past or 'n' for next. It is followed by a number in the range 1-99.  | no |
 
 Sample:
 * `[{'timeFrame':'p7'}]`
@@ -204,8 +204,8 @@ Sample:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`teamId`** | `394` | footballdata-org id of the team | no |
-| **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either p(ast) or n(ext), representing a timeframe either in the past or future. It is followed by a number in the range 1..99. It defaults to n7 in the fixture resource and is unset for fixture as a subresource. For instance: p6 would return all fixtures in the last 6 days, whereas n23 would result in returning all fixtures in the next 23 days. | yes |
-| **`venue`** | `home` | Defines the venue of a fixture. Valid values: `home` and `away` .Default is unset and means to return all fixtures. | yes |
+| **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either 'p' for past or 'n' for next. It is followed by a number in the range 1-99.  | yes |
+| **`venue`** | `home` | Valid values: `home` and `away`. Default is unset. | yes |
 
 Samples:
 * `[{'teamId':'5', 'timeFrame':'p8', 'venue':'home'}]`
