@@ -2,8 +2,8 @@
 ![apiNG][logo]
 
 [![Join the chat at https://gitter.im/JohnnyTheTank/apiNG](https://img.shields.io/badge/GITTER-join%20chat-green.svg)](https://gitter.im/JohnnyTheTank/apiNG?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![npm version](https://badge.fury.io/js/aping-plugin-footballdata.png)](https://badge.fury.io/js/aping-plugin-footballdata)
-[![Bower version](https://badge.fury.io/bo/apiNG-plugin-footballdata.png)](https://badge.fury.io/bo/apiNG-plugin-footballdata)
+[![npm version](https://badge.fury.io/js/aping-plugin-footballdata.svg)](https://badge.fury.io/js/aping-plugin-footballdata)
+[![Bower version](https://badge.fury.io/bo/apiNG-plugin-footballdata.svg)](https://badge.fury.io/bo/apiNG-plugin-footballdata)
 
 **_apiNG-plugin-footballdata_** is a [football-data.org API](http://api.football-data.org/index) plugin for [**apiNG**](https://github.com/JohnnyTheTank/apiNG).
 
