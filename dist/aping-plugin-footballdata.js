@@ -1,6 +1,6 @@
 /**
     @name: aping-plugin-footballdata 
-    @version: 0.5.4 (25-06-2016) 
+    @version: 0.5.5 (20-12-2016) 
     @author: Jonathan Hornung 
     @url: https://github.com/JohnnyTheTank/apiNG-plugin-footballdata 
     @license: MIT
@@ -604,7 +604,7 @@ angular.module("jtt_footballdata", [])
     }])
     .service('footballdataSearchDataService', function () {
         this.getApiBaseUrl = function () {
-            return 'http://api.football-data.org/v1/';
+            return 'https://api.football-data.org/v1/';
         };
 
         this.fillDataInObjectByList = function (_object, _params, _list) {
