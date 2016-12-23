@@ -121,6 +121,7 @@ Every **apiNG plugin** expects an array of **requests** as html attribute.
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|---------|
 | **`teamId`** | `5` | footballdata-org id of the team | no |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'teamId':'5'}]`
@@ -130,6 +131,7 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`leagueId`** | `394` | footballdata-org id of the league | no |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'leagueId':'394'}]`
@@ -139,6 +141,7 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`teamId`** | `5` | footballdata-org id of the team | no |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'teamId':'5'}]`
@@ -148,6 +151,7 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`leagueId`** | `394` | footballdata-org id of the league | no |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'leagueId':'394'}]`
@@ -157,6 +161,7 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`year`** | `2015` | year of the league. use `$CURRENT` for the current year | no |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'year':'2015'}]`
@@ -167,6 +172,7 @@ Samples:
 |----------|---------|---------|---------|
 | **`leagueId`** | `394` | footballdata-org id of the league | no |
 | **`matchday`** | `3` | The current/last matchday is taken per default | yes |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'leagueId':'394', 'matchday':4}]`
@@ -176,6 +182,7 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`fixtureId`** | `131257` | footballdata-org id of the fixture | no |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'fixtureId':'131257'}]`
@@ -196,6 +203,7 @@ Samples:
 |  parameter  | sample | description | optional |
 |----------|---------|---------|---------|
 | **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either 'p' for past or 'n' for next. It is followed by a number in the range 1-99.  | no |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Sample:
 * `[{'timeFrame':'p7'}]`
@@ -206,6 +214,7 @@ Sample:
 | **`teamId`** | `394` | footballdata-org id of the team | no |
 | **`timeFrame`** | `p7` | The value of the timeFrame argument must start with either 'p' for past or 'n' for next. It is followed by a number in the range 1-99.  | yes |
 | **`venue`** | `home` | Valid values: `home` and `away`. Default is unset. | yes |
+| **`protocol`** | `https` | used protocol (`http`, `https`, `none`) | yes |
 
 Samples:
 * `[{'teamId':'5', 'timeFrame':'p8', 'venue':'home'}]`
