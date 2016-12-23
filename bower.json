@@ -4,7 +4,7 @@
   "authors": [
     "Jonathan Hornung <jonathan.hornung@gmail.com>"
   ],
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "football-data.org plugin for apiNG",
   "main": "dist/aping-plugin-footballdata.js",
   "moduleType": [],

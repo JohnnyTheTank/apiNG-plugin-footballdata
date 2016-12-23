@@ -1,6 +1,6 @@
 /**
     @name: aping-plugin-footballdata 
-    @version: 0.5.5 (20-12-2016) 
+    @version: 0.5.6 (23-12-2016) 
     @author: Jonathan Hornung 
     @url: https://github.com/JohnnyTheTank/apiNG-plugin-footballdata 
     @license: MIT
@@ -25,7 +25,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                         model: appSettings.model,
                     };
 
-                    if(angular.isDefined(appSettings.getNativeData)) {
+                    if (angular.isDefined(appSettings.getNativeData)) {
                         helperObject.getNativeData = appSettings.getNativeData;
                     } else {
                         helperObject.getNativeData = false;
@@ -36,20 +36,28 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                         apiKey: apingUtilityHelper.getApiCredentials(apingFootballDataHelper.getThisPlatformString(), "api_key"),
                     };
 
-                    if(angular.isDefined(request.items)) {
+                    if (request.protocol === "http" || request.protocol === "https") {
+                        requestObject.protocol = request.protocol;
+                    } else if (appSettings.protocol === "http" || appSettings.protocol === "https") {
+                        requestObject.protocol = appSettings.protocol;
+                    } else {
+                        requestObject.protocol = "";
+                    }
+
+                    if (angular.isDefined(request.items)) {
                         if (request.items === 0 || request.items === '0') {
                             return false;
                         }
 
                         // -1 is "no explicit limit". same for NaN value
-                        if(request.items < 0 || isNaN(request.items)) {
+                        if (request.items < 0 || isNaN(request.items)) {
                             request.items = undefined;
                         }
                     }
 
-                    switch(helperObject.model) {
+                    switch (helperObject.model) {
                         case 'fbd-team':
-                            if(angular.isDefined(request.teamId)) {
+                            if (angular.isDefined(request.teamId)) {
 
                                 requestObject.id = request.teamId;
 
@@ -72,9 +80,9 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-league':
-                            if(angular.isDefined(request.year)) {
+                            if (angular.isDefined(request.year)) {
 
-                                if(request.year !== '$CURRENT') {
+                                if (request.year !== '$CURRENT') {
                                     requestObject.season = request.year;
                                 }
 
@@ -84,7 +92,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
                                         }
                                     });
-                            } else if(angular.isDefined(request.leagueId)) {
+                            } else if (angular.isDefined(request.leagueId)) {
                                 requestObject.id = request.leagueId;
 
                                 footballdataFactory.getSeason(requestObject)
@@ -97,7 +105,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-player':
-                            if(angular.isDefined(request.teamId)) {
+                            if (angular.isDefined(request.teamId)) {
 
                                 requestObject.id = request.teamId;
 
@@ -111,11 +119,11 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-table':
-                            if(angular.isDefined(request.leagueId)) {
+                            if (angular.isDefined(request.leagueId)) {
 
                                 requestObject.id = request.leagueId;
 
-                                if(angular.isDefined(request.matchday)) {
+                                if (angular.isDefined(request.matchday)) {
                                     requestObject.matchday = request.matchday;
                                 }
 
@@ -129,7 +137,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-fixture':
-                            if(angular.isDefined(request.fixtureId)) {
+                            if (angular.isDefined(request.fixtureId)) {
 
                                 requestObject.id = request.fixtureId;
 
@@ -139,14 +147,14 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
                                         }
                                     });
-                            } else if(angular.isDefined(request.leagueId)) {
+                            } else if (angular.isDefined(request.leagueId)) {
                                 requestObject.id = request.leagueId;
 
-                                if(angular.isDefined(request.timeFrame)) {
+                                if (angular.isDefined(request.timeFrame)) {
                                     requestObject.timeFrame = request.timeFrame;
                                 }
 
-                                if(angular.isDefined(request.matchday)) {
+                                if (angular.isDefined(request.matchday)) {
                                     requestObject.matchday = request.matchday;
                                 }
 
@@ -156,20 +164,20 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
                                         }
                                     });
-                            } else if(angular.isDefined(request.teamId)) {
+                            } else if (angular.isDefined(request.teamId)) {
                                 requestObject.id = request.teamId;
 
-                                if(angular.isDefined(request.timeFrame)) {
+                                if (angular.isDefined(request.timeFrame)) {
                                     requestObject.timeFrame = request.timeFrame;
                                 }
 
-                                if(angular.isDefined(request.year)) {
-                                    if(request.year !== '$CURRENT') {
+                                if (angular.isDefined(request.year)) {
+                                    if (request.year !== '$CURRENT') {
                                         requestObject.season = request.year;
                                     }
                                 }
 
-                                if(angular.isDefined(request.venue)) {
+                                if (angular.isDefined(request.venue)) {
                                     requestObject.venue = request.venue;
                                 }
 
@@ -180,11 +188,11 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                         }
                                     });
                             } else {
-                                if(angular.isDefined(request.timeFrame)) {
+                                if (angular.isDefined(request.timeFrame)) {
                                     requestObject.timeFrame = request.timeFrame;
                                 }
 
-                                if(angular.isDefined(request.leagueCodes)) {
+                                if (angular.isDefined(request.leagueCodes)) {
                                     requestObject.league = request.leagueCodes;
                                 }
 
@@ -197,9 +205,6 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             }
                             break;
                     }
-
-
-
                 });
             }
         }
@@ -603,8 +608,19 @@ angular.module("jtt_footballdata", [])
         return footballdataFactory;
     }])
     .service('footballdataSearchDataService', function () {
-        this.getApiBaseUrl = function () {
-            return 'https://api.football-data.org/v1/';
+        this.getApiBaseUrl = function (protocol) {
+
+            switch (protocol) {
+                case 'http':
+                case 'https':
+                    protocol += ':';
+                    break;
+
+                default:
+                    protocol = '';
+            }
+
+            return protocol + '//api.football-data.org/v1/';
         };
 
         this.fillDataInObjectByList = function (_object, _params, _list) {
@@ -630,70 +646,70 @@ angular.module("jtt_footballdata", [])
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey', 'season',
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + 'soccerseasons/';
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'soccerseasons/';
                     break;
 
                 case "getSeason":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey',
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + 'soccerseasons/' + _params.id;
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'soccerseasons/' + _params.id;
                     break;
 
                 case "getTeam":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey'
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + 'teams/' + _params.id;
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'teams/' + _params.id;
                     break;
 
                 case "getPlayersByTeam":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey'
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + 'teams/' + _params.id + '/players';
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'teams/' + _params.id + '/players';
                     break;
 
                 case "getFixtures":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey', 'league', 'timeFrame'
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + '/fixtures';
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'fixtures';
                     break;
 
                 case "getFixture":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey', 'head2head'
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + '/fixtures/' + _params.id;
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'fixtures/' + _params.id;
                     break;
 
                 case "getTeamsBySeason":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
-
+                        'apiKey',
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + 'soccerseasons/' + _params.id + '/teams';
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'soccerseasons/' + _params.id + '/teams';
                     break;
 
                 case "getLeagueTableBySeason":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey', 'matchday'
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + 'soccerseasons/' + _params.id + '/leagueTable';
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'soccerseasons/' + _params.id + '/leagueTable';
                     break;
 
                 case "getFixturesBySeason":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey', 'matchday', 'timeFrame'
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + 'soccerseasons/' + _params.id + '/fixtures';
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'soccerseasons/' + _params.id + '/fixtures';
                     break;
 
                 case "getFixturesByTeam":
                     footballdataSearchData = this.fillDataInObjectByList(footballdataSearchData, _params, [
                         'apiKey', 'season', 'timeFrame', 'venue'
                     ]);
-                    footballdataSearchData.url = this.getApiBaseUrl() + '/teams/' + _params.id + '/fixtures';
+                    footballdataSearchData.url = this.getApiBaseUrl(_params.protocol) + 'teams/' + _params.id + '/fixtures';
                     break;
 
             }

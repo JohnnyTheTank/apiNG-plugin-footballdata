@@ -18,7 +18,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                         model: appSettings.model,
                     };
 
-                    if(angular.isDefined(appSettings.getNativeData)) {
+                    if (angular.isDefined(appSettings.getNativeData)) {
                         helperObject.getNativeData = appSettings.getNativeData;
                     } else {
                         helperObject.getNativeData = false;
@@ -29,20 +29,28 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                         apiKey: apingUtilityHelper.getApiCredentials(apingFootballDataHelper.getThisPlatformString(), "api_key"),
                     };
 
-                    if(angular.isDefined(request.items)) {
+                    if (request.protocol === "http" || request.protocol === "https") {
+                        requestObject.protocol = request.protocol;
+                    } else if (appSettings.protocol === "http" || appSettings.protocol === "https") {
+                        requestObject.protocol = appSettings.protocol;
+                    } else {
+                        requestObject.protocol = "";
+                    }
+
+                    if (angular.isDefined(request.items)) {
                         if (request.items === 0 || request.items === '0') {
                             return false;
                         }
 
                         // -1 is "no explicit limit". same for NaN value
-                        if(request.items < 0 || isNaN(request.items)) {
+                        if (request.items < 0 || isNaN(request.items)) {
                             request.items = undefined;
                         }
                     }
 
-                    switch(helperObject.model) {
+                    switch (helperObject.model) {
                         case 'fbd-team':
-                            if(angular.isDefined(request.teamId)) {
+                            if (angular.isDefined(request.teamId)) {
 
                                 requestObject.id = request.teamId;
 
@@ -65,9 +73,9 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-league':
-                            if(angular.isDefined(request.year)) {
+                            if (angular.isDefined(request.year)) {
 
-                                if(request.year !== '$CURRENT') {
+                                if (request.year !== '$CURRENT') {
                                     requestObject.season = request.year;
                                 }
 
@@ -77,7 +85,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
                                         }
                                     });
-                            } else if(angular.isDefined(request.leagueId)) {
+                            } else if (angular.isDefined(request.leagueId)) {
                                 requestObject.id = request.leagueId;
 
                                 footballdataFactory.getSeason(requestObject)
@@ -90,7 +98,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-player':
-                            if(angular.isDefined(request.teamId)) {
+                            if (angular.isDefined(request.teamId)) {
 
                                 requestObject.id = request.teamId;
 
@@ -104,11 +112,11 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-table':
-                            if(angular.isDefined(request.leagueId)) {
+                            if (angular.isDefined(request.leagueId)) {
 
                                 requestObject.id = request.leagueId;
 
-                                if(angular.isDefined(request.matchday)) {
+                                if (angular.isDefined(request.matchday)) {
                                     requestObject.matchday = request.matchday;
                                 }
 
@@ -122,7 +130,7 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             break;
 
                         case 'fbd-fixture':
-                            if(angular.isDefined(request.fixtureId)) {
+                            if (angular.isDefined(request.fixtureId)) {
 
                                 requestObject.id = request.fixtureId;
 
@@ -132,14 +140,14 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
                                         }
                                     });
-                            } else if(angular.isDefined(request.leagueId)) {
+                            } else if (angular.isDefined(request.leagueId)) {
                                 requestObject.id = request.leagueId;
 
-                                if(angular.isDefined(request.timeFrame)) {
+                                if (angular.isDefined(request.timeFrame)) {
                                     requestObject.timeFrame = request.timeFrame;
                                 }
 
-                                if(angular.isDefined(request.matchday)) {
+                                if (angular.isDefined(request.matchday)) {
                                     requestObject.matchday = request.matchday;
                                 }
 
@@ -149,20 +157,20 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                             apingController.concatToResults(apingFootballDataHelper.getObjectByJsonData(_data, helperObject));
                                         }
                                     });
-                            } else if(angular.isDefined(request.teamId)) {
+                            } else if (angular.isDefined(request.teamId)) {
                                 requestObject.id = request.teamId;
 
-                                if(angular.isDefined(request.timeFrame)) {
+                                if (angular.isDefined(request.timeFrame)) {
                                     requestObject.timeFrame = request.timeFrame;
                                 }
 
-                                if(angular.isDefined(request.year)) {
-                                    if(request.year !== '$CURRENT') {
+                                if (angular.isDefined(request.year)) {
+                                    if (request.year !== '$CURRENT') {
                                         requestObject.season = request.year;
                                     }
                                 }
 
-                                if(angular.isDefined(request.venue)) {
+                                if (angular.isDefined(request.venue)) {
                                     requestObject.venue = request.venue;
                                 }
 
@@ -173,11 +181,11 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                                         }
                                     });
                             } else {
-                                if(angular.isDefined(request.timeFrame)) {
+                                if (angular.isDefined(request.timeFrame)) {
                                     requestObject.timeFrame = request.timeFrame;
                                 }
 
-                                if(angular.isDefined(request.leagueCodes)) {
+                                if (angular.isDefined(request.leagueCodes)) {
                                     requestObject.league = request.leagueCodes;
                                 }
 
@@ -190,9 +198,6 @@ angular.module("jtt_aping_footballdata", ['jtt_footballdata'])
                             }
                             break;
                     }
-
-
-
                 });
             }
         }
